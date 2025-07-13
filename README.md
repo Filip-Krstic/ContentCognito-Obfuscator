@@ -6,7 +6,7 @@
 
 ## Overview
 
-This repository hosts the **Instagram Fake Data Logger (IFDL.py)**, which serves as the **Defense Module** within a broader "Automated Social Media Profiling and Behavioral Obfuscation" framework. Its primary purpose is to simulate human-like activity on Instagram to obfuscate automated psychological profiling attempts. By generating plausible, varied engagement, IFDL aims to reduce the accuracy of AI systems attempting to infer user traits from their online behavior.
+This repository hosts the **Instagram Fake Data Logger (IFDL.py)**, which serves as a tool for exploring concepts in digital privacy and behavioral obfuscation. Its primary purpose is to simulate human-like activity on Instagram to understand and counter automated psychological profiling attempts. By generating plausible, varied engagement, IFDL aims to reduce the accuracy of AI systems attempting to infer user traits from their online behavior.
 
 **Important Note:** This script is developed **solely for research and educational purposes** to explore concepts in digital privacy, adversarial AI, and behavioral obfuscation. It is intended for use in controlled environments to understand the dynamics of automated profiling and its countermeasures. **Research findings utilizing this script will be published soon.**
 
@@ -28,8 +28,8 @@ The script operates through a user-friendly Graphical User Interface (GUI) for e
 * **Intelligent Content Interaction (Content-Aware):**
     * Utilizes a **CLIP model** to classify on-screen images and text against a curated list of relevant labels.
     * Performs simulated **clicks** and **likes** based on **semantic matching** (e.g., liking Reels based on detected content relevance).
-    * Simulates **randomized scrolling** and **pauses** to mimic natural Browse.
-* **Behavioral Obfuscation:** Generates **plausible noise** by emulating human engagement and randomizing timing and content interactions, substantially reducing the accuracy of profiling models.
+    * Simulates **randomized scrolling** and **pauses** to mimic natural browsing.
+* **Behavioral Obfuscation:** Generates **plausible noise** by emulating human engagement and randomizing timing and content interactions, contributing to the study of reducing profiling accuracy.
 * **Persistent ADB Connection:** Maintains an active ADB connection throughout the script's runtime, ensuring continuous device control.
 * **Label Tracking:** Keeps a count of detected labels, saved to a CSV file (`label_counts.csv`), providing basic insights into simulated engagement.
 * **Graceful Shutdown:** Ensures clean termination of all background processes (Scrcpy, threads) upon stopping the script or closing the GUI.
@@ -129,7 +129,7 @@ Before running the script, ensure you have the following installed and configure
 
 ## How It Works (Technical Details)
 
-The `IFDL.py` script functions as the **Defense Module** of the proposed framework, simulating human behavior through a multi-threaded approach:
+The `IFDL.py` script functions by simulating human behavior through a multi-threaded approach:
 
 1.  **Initialization:**
     * Loads the **CLIP model** (`openai/clip-vit-base-patch16`) for zero-shot image and text classification, which is crucial for content-aware interactions.
@@ -145,7 +145,7 @@ The `IFDL.py` script functions as the **Defense Module** of the proposed framewo
     * Upon activation, the device is first **unlocked** using the configured method (PIN or a general swipe).
     * The session then enters a loop for a predefined duration (e.g., 45-180 minutes), designed to emulate genuine engagement periods.
     * Within the loop, `IFDL.py` generates **plausible noise** by:
-        * **Content-aware Interactions:** Captures a screenshot of the `scrcpy` window. The CLIP model analyzes this image against a list of predefined `LABELS` (e.g., "love," "programming," "motogp"). If a label is detected with high confidence (e.g., > 51%), the script simulates **mouse clicks** within a randomized region of the screen. These clicks are generated using a **bounded Cauchy distribution** to introduce realistic, non-uniform randomness, making them less predictable than uniform random clicks. This simulates "liking Reels based on semantic matching."
+        * **Content-aware Interactions:** Captures a screenshot of the `scrcpy` window. The CLIP model analyzes this image against a list of predefined `LABELS` (e.g., "love," "programming," "motogp"). If a label is detected with high confidence (e.g., > 51%), the script simulates **mouse clicks** within a randomized region of the screen. These clicks are generated using a **bounded Cauchy distribution** to introduce realistic, non-uniform randomness, making them less predictable than uniform random clicks.
         * **Randomized Engagement:** Performs **simulated vertical scroll gestures** using ADB commands. The scroll parameters (start/end coordinates, duration) are also randomized to mimic natural human scrolling.
         * **Dynamic Pauses:** The script pauses for a random duration (1-17 seconds) between actions. Longer pauses are introduced if content of interest was detected, simulating deeper engagement.
     * The counts of detected labels are persistently stored in `label_counts.csv`.
